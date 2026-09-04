@@ -5,12 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Individual therapy and couples counseling with Stephanie Santora, MSW, LICSW in Exeter, NH and online.">
   <title>Services | Stephanie Santora, MSW, LICSW</title>
+  <style>html.site-intro-pending,html.site-intro-pending body{background:#f7f4ed}</style>
+  <script>
+    (() => {
+      const key = 'stephanie-santora-intro-v1';
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let hasSeenIntro = false;
+      try {
+        hasSeenIntro = sessionStorage.getItem(key) === 'seen';
+        if (!hasSeenIntro) sessionStorage.setItem(key, 'seen');
+      } catch (error) {
+        // Storage can be unavailable in strict privacy modes; the intro still remains safe.
+      }
+      if (!hasSeenIntro && !reducedMotion) {
+        document.documentElement.classList.add('site-intro-pending');
+        window.__siteIntroFallback = window.setTimeout(() => {
+          document.documentElement.classList.remove('site-intro-pending', 'site-intro-revealing');
+        }, 4000);
+      }
+    })();
+  </script>
   <link rel="icon" type="image/png" href="assets/images/favacon/bf7b2dcf-fa09-4a1e-a652-ce0fe356c798.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css"><script src="assets/js/main.js" defer></script>
 </head>
 <body data-page="services">
+  <div class="site-loader" aria-hidden="true">
+    <div class="site-loader__content">
+      <svg class="site-loader__botanical" viewBox="0 0 108 128" aria-hidden="true">
+        <path class="site-loader__stem" pathLength="1" d="M54 119C51 101 53 82 51 63C49 43 52 26 58 9"/>
+        <path class="site-loader__branch site-loader__branch--one" pathLength="1" d="M52 93C42 89 33 81 27 71C38 73 48 80 52 89"/>
+        <path class="site-loader__branch site-loader__branch--two" pathLength="1" d="M52 79C63 72 71 63 76 52C77 64 68 75 53 82"/>
+        <path class="site-loader__branch site-loader__branch--three" pathLength="1" d="M51 60C43 54 37 45 34 35C44 39 51 48 52 57"/>
+        <path class="site-loader__branch site-loader__branch--four" pathLength="1" d="M54 45C63 39 69 30 72 21C73 32 66 42 55 48"/>
+      </svg>
+      <p class="site-loader__name">Stephanie Santora</p>
+      <p class="site-loader__credentials">MSW, LICSW</p>
+      <span class="site-loader__rule"></span>
+    </div>
+  </div>
   <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="site-shell">
     <header class="site-header" data-header><div class="nav-wrap">
@@ -32,12 +66,30 @@
         <div class="container">
           <div class="section-heading reveal"><p class="eyebrow"><span></span> Areas of support</p><h2 id="services-title">A steady place to understand what’s happening—and what may help.</h2></div>
           <div class="services-grid">
-            <article class="service-card reveal"><span class="service-number">01</span><div class="service-icon" aria-hidden="true">◯</div><h3>Individual Therapy</h3><p>One-to-one support for adults and elders, shaped around your concerns, strengths, and goals.</p><a href="contact.html">Ask about individual therapy <span aria-hidden="true">→</span></a></article>
-            <article class="service-card reveal"><span class="service-number">02</span><div class="service-icon" aria-hidden="true">∞</div><h3>Couples Counseling</h3><p>A collaborative setting to explore communication, recurring patterns, conflict, and connection.</p><a href="contact.html">Ask about couples counseling <span aria-hidden="true">→</span></a></article>
-            <article class="service-card reveal"><span class="service-number">03</span><div class="service-icon" aria-hidden="true">⌁</div><h3>Anxiety &amp; Depression Support</h3><p>Thoughtful support for anxiety, depression, stress, self-esteem concerns, and their impact on daily life.</p><a href="contact.html">Start a conversation <span aria-hidden="true">→</span></a></article>
-            <article class="service-card reveal"><span class="service-number">04</span><div class="service-icon" aria-hidden="true">◇</div><h3>Relationship Challenges</h3><p>Space to work through family conflict, divorce, parenting, infidelity, and relationship concerns.</p><a href="contact.html">Start a conversation <span aria-hidden="true">→</span></a></article>
-            <article class="service-card reveal"><span class="service-number">05</span><div class="service-icon" aria-hidden="true">↝</div><h3>Grief &amp; Life Transitions</h3><p>Grounded care through loss, career questions, changing roles, and other meaningful transitions.</p><a href="contact.html">Start a conversation <span aria-hidden="true">→</span></a></article>
-            <article class="service-card reveal"><span class="service-number">06</span><div class="service-icon" aria-hidden="true">✦</div><h3>Mood &amp; Emotional Wellbeing</h3><p>Support for mood disorders, trauma and PTSD, chronic illness, chronic pain, and emotional wellbeing.</p><a href="contact.html">Start a conversation <span aria-hidden="true">→</span></a></article>
+            <article class="service-card reveal">
+              <div class="service-card-head"><div class="service-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="16" r="5"/><path d="M14 37c1.3-7.4 5.8-11.2 10-11.2S32.7 29.6 34 37"/><path class="service-icon-accent" d="M11 24.5C11 15.7 16.8 8 24.5 6.5M37 23.5c0 8.8-5.8 16.5-13.5 18"/></svg></div><span class="service-kind">One-to-one care</span></div>
+              <h3>Individual Therapy</h3><p>One-to-one support for adults and elders, shaped around your concerns, strengths, and goals.</p><a href="contact.html">Ask about individual therapy <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="service-card reveal">
+              <div class="service-card-head"><div class="service-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="17" cy="17" r="4.5"/><circle cx="31" cy="17" r="4.5"/><path d="M8.5 37c1.1-7.3 4.7-11 8.5-11s7.4 3.7 8.5 11M22.5 37c1.1-7.3 4.7-11 8.5-11s7.4 3.7 8.5 11"/><path class="service-icon-accent" d="M21 20.5c1.7 2.2 4.3 2.2 6 0"/></svg></div><span class="service-kind">For couples</span></div>
+              <h3>Couples Counseling</h3><p>A collaborative setting to explore communication, recurring patterns, conflict, and connection.</p><a href="contact.html">Ask about couples counseling <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="service-card reveal">
+              <div class="service-card-head"><div class="service-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M15 39V27.5C15 19 20.2 13 28 13c7.2 0 12 4.4 12 11 0 3.8-1.8 6.3-5 8v7H24"/><path d="M19.5 24.5c2-4 4.8 4 7.2 0s5.2 4 7.3 0"/><path class="service-icon-accent" d="M21 13V8m7.5 4-1.8-4.4m8.1 8.1 3.8-3"/></svg></div><span class="service-kind">Emotional health</span></div>
+              <h3>Anxiety &amp; Depression Support</h3><p>Thoughtful support for anxiety, depression, stress, self-esteem concerns, and their impact on daily life.</p><a href="contact.html">Start a conversation <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="service-card reveal">
+              <div class="service-card-head"><div class="service-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M7 12.5h22v16H17l-7 6v-6H7zM20 20h21v15H31l-6 5v-5h-5z"/><path class="service-icon-accent" d="M14 18h9m4 8h8"/></svg></div><span class="service-kind">Relationships</span></div>
+              <h3>Relationship Challenges</h3><p>Space to work through family conflict, divorce, parenting, infidelity, and relationship concerns.</p><a href="contact.html">Start a conversation <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="service-card reveal">
+              <div class="service-card-head"><div class="service-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="35" cy="12" r="4"/><path d="M8 39c6.5-2.2 8.8-7.2 13-12.2C25.6 21.3 29.2 20 38 20"/><path d="M15 34c3.7 0 7 2 9 5"/><path class="service-icon-accent" d="M28 20c1.3-4.7 4.2-7.3 8.7-8"/></svg></div><span class="service-kind">Life changes</span></div>
+              <h3>Grief &amp; Life Transitions</h3><p>Grounded care through loss, career questions, changing roles, and other meaningful transitions.</p><a href="contact.html">Start a conversation <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="service-card reveal">
+              <div class="service-card-head"><div class="service-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 34c4.8-4.2 10.4-4.2 16 0 5.6-4.2 11.2-4.2 16 0M13 39c3.7-3 7.3-3 11 0 3.7-3 7.3-3 11 0"/><circle cx="24" cy="19" r="6"/><path class="service-icon-accent" d="M24 8V5m11.2 14H39M9 19h3.8m3.3-8-2.4-2.4m18.2 2.4 2.4-2.4"/></svg></div><span class="service-kind">Whole-person care</span></div>
+              <h3>Mood &amp; Emotional Wellbeing</h3><p>Support for mood disorders, trauma and PTSD, chronic illness, chronic pain, and emotional wellbeing.</p><a href="contact.html">Start a conversation <span aria-hidden="true">→</span></a>
+            </article>
           </div>
         </div>
       </section>
@@ -49,16 +101,16 @@
         </div>
       </section>
 
-      <section class="insurance-section section-pad" aria-labelledby="insurance-title">
+      <section class="insurance-section section-pad" id="insurance" aria-labelledby="insurance-title">
         <div class="container">
           <div class="insurance-heading reveal"><div><p class="eyebrow"><span></span> Insurance</p><h2 id="insurance-title">Insurance plans listed by the practice.</h2></div><p>Coverage and benefits vary. Please confirm your current plan and eligibility directly when you inquire.</p></div>
           <div class="insurance-grid">
-            <div class="insurance-card reveal"><img src="assets/images/insurance-anthem.svg" alt="Anthem insurance mark"><span>Anthem</span></div>
-            <div class="insurance-card reveal"><img src="assets/images/insurance-bcbs.svg" alt="Blue Cross BlueShield insurance mark"><span>Blue Cross<br>BlueShield</span></div>
-            <div class="insurance-card reveal"><img src="assets/images/insurance-cigna.svg" alt="Cigna and Evernorth insurance mark"><span>Cigna &amp;<br>Evernorth</span></div>
-            <div class="insurance-card reveal"><img src="assets/images/insurance-harvard.svg" alt="Harvard Pilgrim insurance mark"><span>Harvard Pilgrim</span></div>
-            <div class="insurance-card reveal"><img src="assets/images/insurance-optum.svg" alt="Optum insurance mark"><span>Optum</span></div>
-            <div class="insurance-card reveal"><img src="assets/images/insurance-uhc.svg" alt="UnitedHealthcare and UBH insurance mark"><span>UnitedHealthcare<br>UHC / UBH</span></div>
+            <div class="insurance-card reveal"><img src="assets/images/insurance-anthem.svg?v=2" alt="Anthem" width="240" height="72" loading="lazy" decoding="async"></div>
+            <div class="insurance-card reveal"><img src="assets/images/insurance-bcbs.svg?v=2" alt="Blue Cross Blue Shield" width="240" height="72" loading="lazy" decoding="async"></div>
+            <div class="insurance-card reveal"><img src="assets/images/insurance-cigna.svg?v=2" alt="Cigna and Evernorth" width="240" height="72" loading="lazy" decoding="async"></div>
+            <div class="insurance-card reveal"><img src="assets/images/insurance-harvard.svg?v=2" alt="Harvard Pilgrim Health Care" width="240" height="72" loading="lazy" decoding="async"></div>
+            <div class="insurance-card reveal"><img src="assets/images/insurance-optum.svg?v=2" alt="Optum" width="240" height="72" loading="lazy" decoding="async"></div>
+            <div class="insurance-card reveal"><img src="assets/images/insurance-uhc.svg?v=2" alt="UnitedHealthcare, UHC and UBH" width="240" height="72" loading="lazy" decoding="async"></div>
           </div>
           <p class="insurance-note reveal"><span aria-hidden="true">＋</span> Out-of-network arrangements are also listed. Ask Stephanie about current coverage and fees.</p>
         </div>

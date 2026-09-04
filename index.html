@@ -5,6 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Stephanie Santora, MSW, LICSW offers thoughtful, collaborative therapy for adults and couples in Exeter, New Hampshire and online.">
   <title>Stephanie Santora, MSW, LICSW | Therapy in Exeter, NH</title>
+  <style>html.site-intro-pending,html.site-intro-pending body{background:#f7f4ed}</style>
+  <script>
+    (() => {
+      const key = 'stephanie-santora-intro-v1';
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let hasSeenIntro = false;
+      try {
+        hasSeenIntro = sessionStorage.getItem(key) === 'seen';
+        if (!hasSeenIntro) sessionStorage.setItem(key, 'seen');
+      } catch (error) {
+        // Storage can be unavailable in strict privacy modes; the intro still remains safe.
+      }
+      if (!hasSeenIntro && !reducedMotion) {
+        document.documentElement.classList.add('site-intro-pending');
+        window.__siteIntroFallback = window.setTimeout(() => {
+          document.documentElement.classList.remove('site-intro-pending', 'site-intro-revealing');
+        }, 4000);
+      }
+    })();
+  </script>
   <link rel="icon" type="image/png" href="assets/images/favacon/bf7b2dcf-fa09-4a1e-a652-ce0fe356c798.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,6 +33,20 @@
   <script src="assets/js/main.js" defer></script>
 </head>
 <body data-page="about">
+  <div class="site-loader" aria-hidden="true">
+    <div class="site-loader__content">
+      <svg class="site-loader__botanical" viewBox="0 0 108 128" aria-hidden="true">
+        <path class="site-loader__stem" pathLength="1" d="M54 119C51 101 53 82 51 63C49 43 52 26 58 9"/>
+        <path class="site-loader__branch site-loader__branch--one" pathLength="1" d="M52 93C42 89 33 81 27 71C38 73 48 80 52 89"/>
+        <path class="site-loader__branch site-loader__branch--two" pathLength="1" d="M52 79C63 72 71 63 76 52C77 64 68 75 53 82"/>
+        <path class="site-loader__branch site-loader__branch--three" pathLength="1" d="M51 60C43 54 37 45 34 35C44 39 51 48 52 57"/>
+        <path class="site-loader__branch site-loader__branch--four" pathLength="1" d="M54 45C63 39 69 30 72 21C73 32 66 42 55 48"/>
+      </svg>
+      <p class="site-loader__name">Stephanie Santora</p>
+      <p class="site-loader__credentials">MSW, LICSW</p>
+      <span class="site-loader__rule"></span>
+    </div>
+  </div>
   <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="site-shell">
     <header class="site-header" data-header>
@@ -43,6 +77,7 @@
             <div class="button-row">
               <a class="button button-primary" href="contact.html">Schedule a consultation <span aria-hidden="true">↗</span></a>
               <a class="button button-text" href="services.html">Explore services <span aria-hidden="true">→</span></a>
+              <a class="button button-text" href="services.html#insurance">View insurance <span aria-hidden="true">→</span></a>
             </div>
             <div class="hero-note">
               <span class="availability-dot" aria-hidden="true"></span>

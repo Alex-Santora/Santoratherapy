@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="t"><title id="t">Harvard Pilgrim</title><rect width="64" height="64" rx="18" fill="#f3eee7"/><path d="M18 17h28v30H18z" fill="none" stroke="#9b6755" stroke-width="2"/><path d="M23 23h18M23 29h18M23 35h12M23 41h16" stroke="#9b6755" stroke-width="2" stroke-linecap="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 72">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M32 18c7-4 15-4 22 0v18c0 9-8 15-22 20C18 51 10 45 10 36V18c7-4 15-4 22 0Z" stroke="#536e61" stroke-width="2"/>
+    <path d="M23 28v16m14-16v16M23 36h14" stroke="#b98268" stroke-width="2"/>
+  </g>
+  <text x="70" y="30" fill="#20312f" font-family="Georgia, 'Times New Roman', serif" font-size="17" font-weight="700">Harvard Pilgrim</text>
+  <text x="70" y="49" fill="#53615e" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" letter-spacing="1">HEALTH CARE</text>
+</svg>

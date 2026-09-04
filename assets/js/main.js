@@ -2,6 +2,84 @@
   'use strict';
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // First-visit botanical entrance. The inline head script decides whether it runs.
+  const initSiteLoader = () => {
+    const root = document.documentElement;
+    if (!root.classList.contains('site-intro-pending')) return;
+
+    const loader = document.querySelector('.site-loader');
+    const siteShell = document.querySelector('.site-shell');
+    const skipLink = document.querySelector('.skip-link');
+    if (!loader) {
+      root.classList.remove('site-intro-pending');
+      return;
+    }
+
+    window.clearTimeout(window.__siteIntroFallback);
+    const startedAt = performance.now();
+    let isHiding = false;
+    let releaseTimer;
+
+    const canUseInert = 'inert' in HTMLElement.prototype;
+    if (canUseInert) {
+      if (siteShell) siteShell.inert = true;
+      if (skipLink) skipLink.inert = true;
+    }
+
+    const finishSiteLoader = () => {
+      window.clearTimeout(releaseTimer);
+      window.clearTimeout(window.__siteIntroFallback);
+      root.classList.remove('site-intro-pending', 'site-intro-revealing');
+      if (canUseInert) {
+        if (siteShell) siteShell.inert = false;
+        if (skipLink) skipLink.inert = false;
+      }
+      loader.remove();
+    };
+
+    const hideSiteLoader = () => {
+      if (isHiding) return;
+      isHiding = true;
+      const remainingIntroTime = Math.max(0, 1080 - (performance.now() - startedAt));
+
+      window.setTimeout(() => {
+        root.classList.remove('site-intro-pending');
+        root.classList.add('site-intro-revealing');
+        const onCurtainEnd = event => {
+          if (event.target !== loader || event.animationName !== 'loaderCurtainOut') return;
+          loader.removeEventListener('animationend', onCurtainEnd);
+          finishSiteLoader();
+        };
+        loader.addEventListener('animationend', onCurtainEnd);
+        releaseTimer = window.setTimeout(finishSiteLoader, 900);
+      }, remainingIntroTime);
+    };
+
+    const waitForImportantResources = async () => {
+      const waits = [];
+      if (document.fonts?.ready) waits.push(document.fonts.ready);
+
+      const priorityImage = document.querySelector('img[fetchpriority="high"]');
+      if (priorityImage && !priorityImage.complete) {
+        waits.push(new Promise(resolve => {
+          priorityImage.addEventListener('load', resolve, { once: true });
+          priorityImage.addEventListener('error', resolve, { once: true });
+        }));
+      }
+      await Promise.all(waits);
+    };
+
+    Promise.race([
+      waitForImportantResources(),
+      new Promise(resolve => window.setTimeout(resolve, 1800))
+    ]).then(hideSiteLoader, hideSiteLoader);
+
+    window.__siteIntroFallback = window.setTimeout(finishSiteLoader, 4000);
+  };
+
+  initSiteLoader();
+
   const header = document.querySelector('[data-header]');
   const navToggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.site-nav');
