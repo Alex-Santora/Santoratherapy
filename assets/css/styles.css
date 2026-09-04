@@ -200,7 +200,7 @@ html.site-intro-revealing .site-loader__content { animation: loaderContentOut .4
 .availability-dot { position: relative; width: 9px; height: 9px; border-radius: 50%; background: var(--sage); box-shadow: 0 0 0 5px rgba(130,153,140,.14); }
 .availability-dot::after { content: ""; position: absolute; inset: -5px; border: 1px solid var(--sage); border-radius: inherit; animation: pulse 2.8s infinite; }
 @keyframes pulse { 0%,100% { transform: scale(.6); opacity: 0 } 35% { opacity: .55 } 75% { transform: scale(1.35); opacity: 0 } }
-.portrait-composition { position: relative; width: min(100%, 320px); margin-left: auto; }
+.portrait-composition { position: relative; width: min(100%, 340px); margin-inline: auto; }
 .portrait-photo { overflow: hidden; position: relative; aspect-ratio: 1; border-radius: 2px; background: var(--sage-pale); box-shadow: 0 28px 70px rgba(31,52,56,.17); }
 .portrait-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 68%, rgba(20,35,36,.2)); pointer-events: none; }
 .portrait-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 47%; }
@@ -292,6 +292,9 @@ html.site-intro-revealing .site-loader__content { animation: loaderContentOut .4
 .accordion-panel p { max-width: 620px; padding: 0 40px 25px 4px; color: var(--ink-soft); }
 
 /* Payment */
+.payment-hero .page-hero-grid { display: block; }
+.payment-hero .eyebrow { margin-bottom: clamp(30px, 4vw, 48px); }
+.payment-hero .lead { width: 100%; max-width: 1100px; margin-bottom: 0; }
 .payment-section { background: var(--paper); }
 .payment-section + .payment-section { border-top: 1px solid var(--line); background: var(--cream); }
 .payment-layout { display: grid; grid-template-columns: .65fr 1.35fr; gap: clamp(52px, 10vw, 140px); align-items: start; }
@@ -446,7 +449,7 @@ html.site-intro-revealing .site-loader__content { animation: loaderContentOut .4
   .hero { min-height: auto; }
   .hero-grid, .intro-grid, .approach-grid, .page-hero-grid, .focus-grid, .faq-grid, .contact-layout { grid-template-columns: 1fr; }
   .hero-copy { max-width: 680px; }
-  .portrait-composition { width: min(62vw, 320px); margin: 30px auto 0; }
+  .portrait-composition { width: min(64vw, 330px); margin: 30px auto 0; }
   .intro-copy { padding-top: 0; }
   .approach-visual { width: min(80%, 500px); margin-inline: auto; }
   .page-hero-grid { align-items: start; }
@@ -468,7 +471,7 @@ html.site-intro-revealing .site-loader__content { animation: loaderContentOut .4
   .hero { padding-top: 58px; }
   .hero .eyebrow { max-width: 250px; align-items: flex-start; }
   .hero .eyebrow > span { margin-top: 8px; }
-  .portrait-composition { width: min(74vw, 280px); }
+  .portrait-composition { width: min(78vw, 292px); }
   .portrait-caption { right: -12px; }
   .botanical-line { right: -35px; }
   .site-loader__botanical { width: 78px; height: 92px; }
