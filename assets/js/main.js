@@ -104,6 +104,10 @@
     document.body.classList.toggle('nav-open', !open);
   });
   nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', closeNav));
+  const desktopNavigation = window.matchMedia('(min-width: 821px)');
+  const handleNavigationBreakpoint = event => { if (event.matches) closeNav(); };
+  if (desktopNavigation.addEventListener) desktopNavigation.addEventListener('change', handleNavigationBreakpoint);
+  else desktopNavigation.addListener(handleNavigationBreakpoint);
   window.addEventListener('keydown', event => {
     if (event.key === 'Escape' && nav?.classList.contains('open')) {
       closeNav();

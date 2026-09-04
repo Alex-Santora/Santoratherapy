@@ -20,14 +20,14 @@ Therapy is shaped around your needs, strengths, and goals. Stephanie’s approac
 
 ## Ways to Meet
 
-Stephanie offers individual therapy and couples counseling for adults and elders. Appointments are available:
+Stephanie offers individual therapy and couples counseling for adults, including adults age 65 and older. Appointments are available:
 
 - In person in Exeter, New Hampshire
 - Online for added comfort and flexibility
 
 ## Explore the Site
 
-Visit the **Services** page to learn more about the areas Stephanie supports, her approach to therapy, insurance information, and answers to common questions.
+Visit the **Services** page to learn more about the areas Stephanie supports, her approach to therapy, and answers to common questions. Visit the **Payment** page for insurance and session fee information.
 
 When you are ready, visit the **Contact** page or call **(844) 939-3003** to start a general conversation. You are welcome to ask questions and learn more before deciding what comes next.
 
