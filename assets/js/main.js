@@ -142,7 +142,7 @@
   // Footer year
   document.querySelectorAll('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
 
-  // Contact form: local validation/demo only until a secure endpoint is configured.
+  // Contact form: validate locally, then let the browser submit directly to Formspree.
   const form = document.getElementById('contact-form');
   if (!form) return;
 
@@ -238,30 +238,12 @@
   });
 
   form.addEventListener('submit', event => {
-    const usingPlaceholder = form.dataset.placeholderEndpoint === 'true';
-    if (usingPlaceholder) event.preventDefault();
     const result = validate();
     if (!result.valid) {
       event.preventDefault();
       status.textContent = 'Please review the highlighted fields.';
       result.firstInvalid?.focus();
       return;
-    }
-
-    if (usingPlaceholder) {
-      status.textContent = '';
-      submitButton.disabled = true;
-      submitButton.classList.add('loading');
-      submitButton.querySelector('.button-label').textContent = 'Preparing inquiry…';
-
-      // EmailJS integration point: replace this timer with emailjs.sendForm(...).
-      window.setTimeout(() => {
-        submitButton.disabled = false;
-        submitButton.classList.remove('loading');
-        submitButton.querySelector('.button-label').textContent = 'Send general inquiry';
-        form.reset();
-        openModal();
-      }, 700);
     }
   });
 })();

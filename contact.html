@@ -90,12 +90,9 @@
 
           <div class="form-card page-enter page-enter-delay-two">
             <div class="form-intro"><span>General inquiry</span><h2>How can Stephanie reach you?</h2><p>Share only the basics here. Fields marked <b>*</b> are required.</p></div>
-            <!-- STATIC FORM SETUP:
-              Replace action="#" with your Formspree endpoint, or add Netlify's data-netlify="true" attribute.
-              For EmailJS, connect its send method in assets/js/main.js where noted.
-              The current JavaScript demonstrates validation and a local success state without transmitting data.
-            -->
-            <form id="contact-form" action="#" method="post" novalidate data-placeholder-endpoint="true">
+            <form id="contact-form" action="https://formspree.io/f/xqpklyzk" method="post" novalidate>
+              <input type="hidden" name="_subject" value="New Santora Therapy Website Contact">
+              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="display: none">
               <div class="field-row">
                 <div class="field floating-field"><input id="name" name="name" type="text" autocomplete="name" placeholder=" " required aria-describedby="name-error"><label for="name">Name <span>*</span></label><span class="field-error" id="name-error" aria-live="polite"></span></div>
                 <div class="field floating-field"><input id="email" name="email" type="email" autocomplete="email" placeholder=" " required aria-describedby="email-error"><label for="email">Email <span>*</span></label><span class="field-error" id="email-error" aria-live="polite"></span></div>
