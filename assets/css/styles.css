@@ -67,6 +67,11 @@ address { font-style: normal; }
 .nav-toggle { display: none; width: 45px; height: 45px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: transparent; }
 .nav-toggle span { display: block; width: 17px; height: 1px; margin: 5px auto; background: var(--ink); transition: transform .3s; }
 
+@media (min-width: 821px) {
+  .nav-wrap { position: relative; }
+  .site-nav { position: absolute; left: 50%; transform: translateX(-50%); }
+}
+
 /* Shared typography and controls */
 .eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; color: var(--sage-deep); font-size: 11px; font-weight: 600; letter-spacing: .17em; text-transform: uppercase; }
 .eyebrow > span { width: 28px; height: 1px; background: currentColor; }
