@@ -329,6 +329,7 @@ html.site-intro-revealing .site-loader__content { animation: loaderContentOut .4
 .form-intro > span { color: var(--sage-deep); font-size: 10px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
 .form-intro h2 { margin: 8px 0 10px; font-size: clamp(2.2rem, 4vw, 3.5rem); }
 .form-intro p { color: var(--ink-soft); font-size: 13px; }
+.contact-company-field { overflow: hidden; position: absolute; left: -10000px; width: 1px; height: 1px; white-space: nowrap; clip-path: inset(50%); }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .field { position: relative; margin-bottom: 22px; }
 .field input, .field select, .field textarea { width: 100%; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); background: var(--cream); transition: border .2s, box-shadow .2s, background .2s; }
@@ -368,6 +369,8 @@ html.site-intro-revealing .site-loader__content { animation: loaderContentOut .4
 .submit-button.loading .button-arrow { display: none; }
 @keyframes spin { to { transform: rotate(360deg) } }
 .form-status { margin: 12px 0 0; font-size: 12px; }
+.form-status.is-error { color: #9b3f36; }
+.form-status.is-success { color: var(--sage-deep); }
 .modal[hidden] { display: none; }
 .modal { position: fixed; inset: 0; z-index: 500; display: grid; place-items: center; padding: 24px; }
 .modal-backdrop { position: absolute; inset: 0; background: rgba(21,34,34,.66); backdrop-filter: blur(6px); animation: fadeIn .3s; }

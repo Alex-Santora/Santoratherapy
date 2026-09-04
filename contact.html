@@ -27,7 +27,7 @@
   <link rel="icon" type="image/png" href="assets/images/favacon/bf7b2dcf-fa09-4a1e-a652-ce0fe356c798.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css"><script src="assets/js/main.js" defer></script>
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260904-1"><script src="assets/js/main.js?v=20260904-1" defer></script>
 </head>
 <body data-page="contact">
   <div class="site-loader" aria-hidden="true">
@@ -90,15 +90,18 @@
 
           <div class="form-card page-enter page-enter-delay-two">
             <div class="form-intro"><span>General inquiry</span><h2>How can Stephanie reach you?</h2><p>Share only the basics here. Fields marked <b>*</b> are required.</p></div>
-            <form id="contact-form" action="https://formspree.io/f/xqpklyzk" method="post" novalidate>
+            <form id="contact-form" action="https://formspree.io/f/xqpklyzk" method="post" accept-charset="UTF-8" novalidate>
               <input type="hidden" name="_subject" value="New Santora Therapy Website Contact">
-              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="display: none">
-              <div class="field-row">
-                <div class="field floating-field"><input id="name" name="name" type="text" autocomplete="name" placeholder=" " required aria-describedby="name-error"><label for="name">Name <span>*</span></label><span class="field-error" id="name-error" aria-live="polite"></span></div>
-                <div class="field floating-field"><input id="email" name="email" type="email" autocomplete="email" placeholder=" " required aria-describedby="email-error"><label for="email">Email <span>*</span></label><span class="field-error" id="email-error" aria-live="polite"></span></div>
+              <div class="contact-company-field" aria-hidden="true">
+                <label for="company-website">Company website</label>
+                <input id="company-website" name="company_website" type="text" tabindex="-1" autocomplete="off">
               </div>
               <div class="field-row">
-                <div class="field floating-field"><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder=" " aria-describedby="phone-error"><label for="phone">Phone</label><span class="field-error" id="phone-error" aria-live="polite"></span></div>
+                <div class="field floating-field"><input id="name" name="name" type="text" autocomplete="name" placeholder=" " minlength="2" maxlength="80" required aria-describedby="name-error"><label for="name">Name <span>*</span></label><span class="field-error" id="name-error" aria-live="polite"></span></div>
+                <div class="field floating-field"><input id="email" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" placeholder=" " maxlength="254" required aria-describedby="email-error"><label for="email">Email <span>*</span></label><span class="field-error" id="email-error" aria-live="polite"></span></div>
+              </div>
+              <div class="field-row">
+                <div class="field floating-field"><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder=" " maxlength="30" aria-describedby="phone-error"><label for="phone">Phone</label><span class="field-error" id="phone-error" aria-live="polite"></span></div>
                 <div class="field select-field"><label for="contact-method">Preferred contact method <span>*</span></label><select id="contact-method" name="contact_method" required aria-describedby="contact-method-error"><option value="">Please select</option><option>Email</option><option>Phone</option></select><span class="field-error" id="contact-method-error" aria-live="polite"></span></div>
               </div>
               <fieldset class="choice-group" aria-describedby="interest-error"><legend>I’m interested in <span>*</span></legend><div class="choice-grid">
@@ -112,11 +115,11 @@
                 <label class="choice-pill"><input type="radio" name="session_type" value="Online"><span>Online</span></label>
                 <label class="choice-pill"><input type="radio" name="session_type" value="Either"><span>Either</span></label>
               </div><span class="field-error" id="session-type-error" aria-live="polite"></span></fieldset>
-              <div class="field floating-field textarea-field"><textarea id="message" name="message" rows="5" placeholder=" " maxlength="800" aria-describedby="message-hint message-error"></textarea><label for="message">Short message (optional)</label><span class="field-hint" id="message-hint">Please keep this general—no sensitive health information.</span><span class="field-error" id="message-error" aria-live="polite"></span></div>
+              <div class="field floating-field textarea-field"><textarea id="message" name="message" rows="5" placeholder=" " minlength="10" maxlength="800" aria-describedby="message-hint message-error"></textarea><label for="message">Short message (optional)</label><span class="field-hint" id="message-hint">Please keep this general—no sensitive health information.</span><span class="field-error" id="message-error" aria-live="polite"></span></div>
               <label class="consent-field"><input id="consent" name="consent" type="checkbox" required><span class="checkmark" aria-hidden="true"></span><span>I understand this form is for general inquiries only and should not be used for emergencies or highly sensitive health information. <b>*</b></span></label><span class="field-error consent-error" id="consent-error" aria-live="polite"></span>
               <div class="emergency-note"><span aria-hidden="true">!</span><p>This form is for general inquiries only. If you are experiencing an emergency, call 911 or go to the nearest emergency room.</p></div>
               <button class="button button-primary submit-button" type="submit"><span class="button-label">Send general inquiry</span><span class="button-loader" aria-hidden="true"></span><span aria-hidden="true" class="button-arrow">↗</span></button>
-              <p class="form-status" role="status" aria-live="polite"></p>
+              <p class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
             </form>
           </div>
         </div>

@@ -142,51 +142,155 @@
   // Footer year
   document.querySelectorAll('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
 
-  // Contact form: validate locally, then let the browser submit directly to Formspree.
+  // Contact form: validate locally, then submit to the existing Formspree endpoint.
   const form = document.getElementById('contact-form');
   if (!form) return;
 
   const modal = document.getElementById('success-modal');
   const modalPanel = modal?.querySelector('.modal-panel');
   const submitButton = form.querySelector('.submit-button');
+  const buttonLabel = submitButton?.querySelector('.button-label');
   const status = form.querySelector('.form-status');
+  const controls = {
+    companyWebsite: document.getElementById('company-website'),
+    name: document.getElementById('name'),
+    email: document.getElementById('email'),
+    phone: document.getElementById('phone'),
+    contactMethod: document.getElementById('contact-method'),
+    message: document.getElementById('message'),
+    consent: document.getElementById('consent')
+  };
+  const defaultButtonLabel = buttonLabel?.textContent || '';
+  const formAvailableAt = Date.now();
+  const minimumCompletionTime = 2000;
+  const cooldownDuration = 60 * 1000;
+  const duplicateWindow = 10 * 60 * 1000;
+  const storageKeys = {
+    lastSuccess: 'santora-contact-last-success-v1',
+    lastFingerprint: 'santora-contact-last-fingerprint-v1'
+  };
+  let isSubmitting = false;
   let lastFocused = null;
 
   const messages = {
     name: 'Please enter your name.',
     email: 'Please enter a valid email address.',
+    phone: 'Please enter a valid phone number.',
     'contact-method': 'Please choose how you prefer to be contacted.',
     interest: 'Please select what you are interested in.',
     'session-type': 'Please select a session format.',
+    message: 'Your message is too short.',
     consent: 'Please confirm that you understand the privacy notice.'
+  };
+
+  const getControl = key => {
+    if (key === 'interest') return form.querySelector('input[name="interest"]');
+    if (key === 'session-type') return form.querySelector('input[name="session_type"]');
+    return document.getElementById(key);
   };
 
   const setError = (key, message = '') => {
     const error = document.getElementById(`${key}-error`);
     if (error) error.textContent = message;
-    const control = document.getElementById(key);
+    const control = getControl(key);
     control?.closest('.field')?.classList.toggle('has-error', Boolean(message));
+    control?.closest('fieldset')?.classList.toggle('has-error', Boolean(message));
     if (control) control.setAttribute('aria-invalid', String(Boolean(message)));
   };
 
-  const validEmail = value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  const setStatus = (message = '', type = '') => {
+    if (!status) return;
+    status.textContent = message;
+    status.classList.toggle('is-error', type === 'error');
+    status.classList.toggle('is-success', type === 'success');
+  };
+
+  const normalizeEmail = value => {
+    const trimmed = value.trim();
+    const atIndex = trimmed.lastIndexOf('@');
+    if (atIndex < 1) return trimmed;
+    return `${trimmed.slice(0, atIndex)}@${trimmed.slice(atIndex + 1).toLowerCase()}`;
+  };
+
+  const validName = value => {
+    const trimmed = value.trim();
+    const letters = trimmed.match(/\p{L}/gu) || [];
+    return trimmed.length >= 2 && trimmed.length <= 80 && letters.length >= 2 && !/[\u0000-\u001f\u007f]/u.test(trimmed);
+  };
+
+  const validEmail = value => {
+    const normalized = normalizeEmail(value);
+    if (normalized.length > 254 || /\s|[\u0000-\u001f\u007f]/u.test(normalized)) return false;
+
+    const parts = normalized.split('@');
+    if (parts.length !== 2) return false;
+    const [localPart, domain] = parts;
+    if (!localPart || localPart.length > 64 || localPart.startsWith('.') || localPart.endsWith('.') || localPart.includes('..')) return false;
+    if (!/^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+$/i.test(localPart)) return false;
+    if (!domain || domain.length > 253 || domain.includes('..')) return false;
+
+    const domainLabels = domain.split('.');
+    if (domainLabels.length < 2 || domainLabels.some(label => !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/i.test(label))) return false;
+    const suffix = domainLabels.at(-1);
+    if (!/^(?:[a-z]{2,63}|xn--[a-z0-9-]{2,59})$/i.test(suffix)) return false;
+
+    const placeholders = new Set(['example@example.com', 'email@email.com', 'abc@abc.com']);
+    return !placeholders.has(normalized.toLowerCase());
+  };
+
+  const validPhone = value => {
+    const trimmed = value.trim();
+    if (!trimmed) return true;
+    const phonePattern = /^[+\d().\-\s]+(?:\s*(?:x|ext\.?|extension)\s*\d{1,6})?$/i;
+    const digitCount = (trimmed.match(/\d/g) || []).length;
+    return trimmed.length <= 30 && digitCount >= 7 && digitCount <= 20 && phonePattern.test(trimmed);
+  };
+
+  const validMessage = value => {
+    const trimmed = value.trim();
+    if (!trimmed) return true;
+    if (trimmed.length < 10 || trimmed.length > 800) return false;
+
+    const meaningfulCharacters = trimmed.match(/[\p{L}\p{N}]/gu) || [];
+    if (meaningfulCharacters.length < 3) return false;
+    const compactText = meaningfulCharacters.join('').toLocaleLowerCase();
+    return compactText.length < 30 || new Set(Array.from(compactText)).size > 2;
+  };
+
+  const createSubmissionData = () => {
+    const submissionData = new FormData(form);
+    submissionData.set('name', controls.name.value.trim());
+    submissionData.set('email', normalizeEmail(controls.email.value));
+    submissionData.set('phone', controls.phone.value.trim());
+    submissionData.set('message', controls.message.value.trim());
+    submissionData.set('_subject', 'New Santora Therapy Website Contact');
+    return submissionData;
+  };
 
   const validate = () => {
     let firstInvalid = null;
     let valid = true;
-    const name = form.elements.name;
-    const email = form.elements.email;
-    const method = form.elements.contact_method;
+    const name = controls.name;
+    const email = controls.email;
+    const phone = controls.phone;
+    const method = controls.contactMethod;
     const interest = form.querySelector('input[name="interest"]:checked');
     const session = form.querySelector('input[name="session_type"]:checked');
-    const consent = form.elements.consent;
+    const message = controls.message;
+    const consent = controls.consent;
+
+    const allowedMethods = new Set(['Email', 'Phone']);
+    const allowedInterests = new Set(['Individual therapy', 'Couples counseling', 'Consultation', 'Other']);
+    const allowedSessionTypes = new Set(['In-person', 'Online', 'Either']);
 
     const checks = [
-      { key: 'name', ok: name.value.trim().length > 1, control: name },
+      { key: 'name', ok: validName(name.value), control: name },
       { key: 'email', ok: validEmail(email.value.trim()), control: email },
-      { key: 'contact-method', ok: Boolean(method.value), control: method },
-      { key: 'interest', ok: Boolean(interest), control: form.querySelector('input[name="interest"]') },
-      { key: 'session-type', ok: Boolean(session), control: form.querySelector('input[name="session_type"]') },
+      { key: 'phone', ok: validPhone(phone.value), control: phone },
+      { key: 'contact-method', ok: allowedMethods.has(method.value), control: method },
+      { key: 'interest', ok: Boolean(interest && allowedInterests.has(interest.value)), control: form.querySelector('input[name="interest"]') },
+      { key: 'session-type', ok: Boolean(session && allowedSessionTypes.has(session.value)), control: form.querySelector('input[name="session_type"]') },
+      { key: 'message', ok: validMessage(message.value), control: message },
       { key: 'consent', ok: consent.checked, control: consent }
     ];
 
@@ -200,7 +304,7 @@
     return { valid, firstInvalid };
   };
 
-  ['name', 'email', 'contact-method'].forEach(id => {
+  ['name', 'email', 'phone', 'contact-method', 'message'].forEach(id => {
     document.getElementById(id)?.addEventListener('input', () => setError(id));
   });
   form.querySelectorAll('input[type="radio"], #consent').forEach(input => {
@@ -237,13 +341,137 @@
     }
   });
 
-  form.addEventListener('submit', event => {
+  const readStoredNumber = key => {
+    try {
+      const value = Number.parseInt(localStorage.getItem(key), 10);
+      return Number.isFinite(value) ? value : 0;
+    } catch (error) {
+      return 0;
+    }
+  };
+
+  const readStoredFingerprint = () => {
+    try {
+      const record = JSON.parse(localStorage.getItem(storageKeys.lastFingerprint) || 'null');
+      if (!record || typeof record.hash !== 'string' || !Number.isFinite(record.timestamp)) return null;
+      if (Date.now() - record.timestamp > duplicateWindow) {
+        localStorage.removeItem(storageKeys.lastFingerprint);
+        return null;
+      }
+      return record;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const writeSuccessfulSubmission = hash => {
+    try {
+      const timestamp = Date.now();
+      localStorage.setItem(storageKeys.lastSuccess, String(timestamp));
+      if (hash) localStorage.setItem(storageKeys.lastFingerprint, JSON.stringify({ hash, timestamp }));
+    } catch (error) {
+      // Storage may be unavailable; delivery success should not be changed by that.
+    }
+  };
+
+  // This browser-only cooldown is abuse friction, not secure server-side rate limiting; it can be bypassed.
+  const getCooldownSeconds = () => {
+    const elapsed = Date.now() - readStoredNumber(storageKeys.lastSuccess);
+    if (elapsed >= cooldownDuration) return 0;
+    return Math.max(1, Math.ceil((cooldownDuration - elapsed) / 1000));
+  };
+
+  const createFingerprint = async () => {
+    if (!window.crypto?.subtle || typeof TextEncoder === 'undefined') return '';
+    const selectedInterest = form.querySelector('input[name="interest"]:checked')?.value || '';
+    const selectedSession = form.querySelector('input[name="session_type"]:checked')?.value || '';
+    const normalizedContent = JSON.stringify([
+      controls.name.value.trim().toLocaleLowerCase(),
+      normalizeEmail(controls.email.value).toLocaleLowerCase(),
+      controls.phone.value.trim(),
+      controls.contactMethod.value,
+      selectedInterest,
+      selectedSession,
+      'New Santora Therapy Website Contact',
+      controls.message.value.trim().replace(/\s+/gu, ' ').toLocaleLowerCase()
+    ]);
+    const digest = await window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(normalizedContent));
+    return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
+  };
+
+  const setSubmitting = submitting => {
+    isSubmitting = submitting;
+    if (!submitButton) return;
+    submitButton.disabled = submitting;
+    submitButton.classList.toggle('loading', submitting);
+    submitButton.setAttribute('aria-busy', String(submitting));
+    if (buttonLabel) buttonLabel.textContent = submitting ? 'Sending...' : defaultButtonLabel;
+  };
+
+  const clearValidation = () => {
+    Object.keys(messages).forEach(key => setError(key));
+  };
+
+  const resetContactForm = () => {
+    form.reset();
+    clearValidation();
+  };
+
+  const expiredSuccessTimestamp = readStoredNumber(storageKeys.lastSuccess);
+  if (expiredSuccessTimestamp && Date.now() - expiredSuccessTimestamp >= cooldownDuration) {
+    try { localStorage.removeItem(storageKeys.lastSuccess); } catch (error) { /* Storage can be unavailable. */ }
+  }
+  readStoredFingerprint();
+
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (isSubmitting) return;
+
+    if (controls.companyWebsite.value.trim()) return;
+
     const result = validate();
     if (!result.valid) {
-      event.preventDefault();
-      status.textContent = 'Please review the highlighted fields.';
+      setStatus('Please review the highlighted fields.', 'error');
       result.firstInvalid?.focus();
       return;
+    }
+
+    const remainingSeconds = getCooldownSeconds();
+    if (remainingSeconds) {
+      setStatus(`Please wait ${remainingSeconds} second${remainingSeconds === 1 ? '' : 's'} before sending another message.`, 'error');
+      return;
+    }
+
+    if (Date.now() - formAvailableAt < minimumCompletionTime) {
+      setStatus('Something went wrong. Please try again.', 'error');
+      return;
+    }
+
+    setStatus();
+    setSubmitting(true);
+
+    try {
+      const fingerprint = await createFingerprint();
+      const previousSubmission = readStoredFingerprint();
+      if (fingerprint && previousSubmission?.hash === fingerprint) {
+        setStatus('This message was already sent. Please wait before sending it again.', 'error');
+        return;
+      }
+
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: createSubmissionData(),
+        headers: { Accept: 'application/json' }
+      });
+      if (!response.ok) throw new Error('Contact submission failed');
+
+      writeSuccessfulSubmission(fingerprint);
+      resetContactForm();
+      setStatus("Message sent. I'll get back to you soon.", 'success');
+    } catch (error) {
+      setStatus('Something went wrong. Please try again.', 'error');
+    } finally {
+      setSubmitting(false);
     }
   });
 })();
