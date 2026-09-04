@@ -1,67 +1,44 @@
-# Stephanie Santora, MSW, LICSW — Static Practice Website
+# Welcome to Stephanie Santora’s Practice
 
-A custom, responsive three-page website built with semantic HTML, modern CSS, and lightweight vanilla JavaScript. No build process or backend is required.
+Finding the right therapist is a personal decision. This website is here to help you get to know Stephanie Santora, MSW, LICSW, learn about the support she offers, and decide whether reaching out feels like the right next step.
 
-## Open locally
+Stephanie has more than 25 years of experience providing thoughtful, collaborative psychotherapy to adults and older adults. She works with individuals and couples in a warm, respectful setting where you can talk openly, better understand what you are experiencing, and find practical ways to move forward.
 
-You can double-click `index.html`, or serve the folder locally for the most reliable browser behavior:
+## How Stephanie Can Help
 
-```powershell
-python -m http.server 8000
-```
+You may be looking for support with:
 
-Then visit `http://localhost:8000`.
+- Anxiety, depression, or ongoing stress
+- Relationship or family challenges
+- Grief, loss, or a major life transition
+- Trauma or difficult past experiences
+- Self-esteem and emotional wellbeing
+- Chronic illness or chronic pain
+- Communication, conflict, or connection as a couple
 
-## Replace image placeholders
+Therapy is shaped around your needs, strengths, and goals. Stephanie’s approach brings together reflection, practical tools, Cognitive Behavioral Therapy, mindfulness-based work, emotionally focused therapy, and strength-based care.
 
-The portrait, office, and abstract-image areas are intentional styled placeholders. Search the HTML for `Replace this placeholder` to find each one. Add optimized images to `assets/images/` (WebP is recommended), then replace the placeholder `<div>` with an image, for example:
+## Ways to Meet
 
-```html
-<img class="portrait-placeholder" src="assets/images/stephanie-portrait.webp" alt="Stephanie Santora, MSW, LICSW">
-```
+Stephanie offers individual therapy and couples counseling for adults and elders. Appointments are available:
 
-Keep useful, specific alt text. Aim for images under 300 KB when possible. The insurance tile artwork in `assets/images/` is custom, lightweight placeholder iconography rather than official insurer artwork; replace it with approved brand assets if the practice has permission to use them.
+- In person in Exeter, New Hampshire
+- Online for added comfort and flexibility
 
-## Connect the contact form
+## Explore the Site
 
-The form currently validates in the browser and displays a demo confirmation without transmitting data. It intentionally does not collect detailed health or payment information.
+Visit the **Services** page to learn more about the areas Stephanie supports, her approach to therapy, insurance information, and answers to common questions.
 
-### Formspree
+When you are ready, visit the **Contact** page or call **(844) 939-3003** to start a general conversation. You are welcome to ask questions and learn more before deciding what comes next.
 
-1. Create a Formspree form.
-2. In `contact.html`, replace `action="#"` with the supplied `https://formspree.io/f/...` endpoint.
-3. Remove `data-placeholder-endpoint="true"` from the `<form>`.
-4. Consider configuring Formspree’s redirect or adapting the JavaScript to submit with `fetch` and show the existing modal.
+## Practice Location
 
-### Netlify Forms
+Stephanie Santora, MSW, LICSW  
+100 High Street  
+Exeter, NH 03833
 
-1. Add `data-netlify="true"` and `name="contact"` to the `<form>`.
-2. Add `<input type="hidden" name="form-name" value="contact">` inside it.
-3. Remove `data-placeholder-endpoint="true"`.
-4. Deploy to Netlify and verify a test submission in the Netlify dashboard.
+## A Note About Contacting the Practice
 
-### EmailJS
+Please share only basic information through the website’s contact form. Do not include private medical, payment, or emergency information.
 
-1. Add the EmailJS browser SDK and initialize it with the public key.
-2. In `assets/js/main.js`, find the `EmailJS integration point` comment.
-3. Replace the demo timer with `emailjs.sendForm(serviceID, templateID, form)` and handle success/failure there.
-
-Before launch, review the chosen provider’s privacy and security terms with the practice. A general web contact form should not be treated as a secure clinical communication channel.
-
-## Deploy
-
-### GitHub Pages
-
-Push the folder to a GitHub repository. In **Settings → Pages**, deploy from the main branch and root folder.
-
-### Netlify
-
-Drag the folder into Netlify Drop or connect the repository. No build command is needed; set the publish directory to the repository root.
-
-### Vercel
-
-Import the repository as an “Other” framework. No build command is needed, and the output directory is the project root.
-
-## Content source
-
-Practice facts are based on [Stephanie Santora’s Psychology Today profile](https://www.psychologytoday.com/us/therapists/stephanie-santora-exeter-nh/449201). Confirm address, phone, insurance participation, session formats, fees, and other details with the practice before publishing, since directory information can change.
+This website is for general information and is not a substitute for emergency care. If you or someone else is in immediate danger, call **911** or go to the nearest emergency room.
